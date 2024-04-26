@@ -16,26 +16,42 @@ struct Node {
 class LinkedList {
     Node* head;
     int size;
+    int sort_by;
     public:
         LinkedList(){
             this->head = nullptr;
+            this->sort_by = 0;
+            this->size = 1;
         }
-        void push(std::string name,std::string auther,std::string date) {
+        void insert(std::string name,std::string auther,std::string date) {
             size += 1;
             Node* newNode = new Node(name,auther,date);
-            if(head == nullptr)
-                head = newNode;
-            else {
+            if(head == nullptr ||  *(&(head->name)+sort_by) >= *(&name + sort_by)) {
                 newNode->next = head;
                 head = newNode;
+            } else {
+                Node* current = head;
+                while(current->next != nullptr && *(&(current->next->name)+sort_by) < *(&name + sort_by)) {
+                    current = current->next;
+                }
+                newNode->next = current -> next;
+                current->next = newNode;
             }
         }
-        void ddelete(std::string name) {
-            Node* temp = head;
-            while(temp != nullptr) {
-                if (temp->name == name) {
-
+        void remove(std::string name) {
+            Node* current = head;
+            Node* prev = nullptr;
+            while (current != nullptr && current->name.compare(name) != 0) {
+                prev = current;
+                current = current->next;
+            }
+            if (current != nullptr) {
+                if (prev != nullptr) {
+                    prev->next = current->next;
+                } else {
+                    head = current->next;
                 }
+                delete current;
             }
 
         }
@@ -66,11 +82,18 @@ class LinkedList {
 };
 int main() {
     LinkedList Head;
-    Head.push("c++","andrew","21.12.2004");
-    Head.push("python","andrew","12.42.2005");
+    Head.insert("abb","bob","21.12.2004");
+    Head.insert("aaa","bord","12.42.2005");
+    Head.insert("bba","alex","12.42.2005");
+    Head.insert("baa","david","12.42.2005");
+    Head.insert("aaa","muxamed","12.42.2005");
+
+
     Head.display(0);
     std::cout << std::endl;
     Head.display(1);
     std::cout << std::endl;
-    Head.display(2);
+    Head.remove("aaa");
+    Head.display(0);
+    std::cout << std::endl;
 }
