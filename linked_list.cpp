@@ -55,6 +55,27 @@ class LinkedList {
             }
 
         }
+        void sort(int n) {
+            sort_by = n;
+            if (head == nullptr || head->next == nullptr)
+                return;
+            Node* current;
+            bool swapped;
+            do {
+                current = head;
+                swapped = false;
+                Node* tmp = nullptr;
+
+                while (current->next != tmp) {
+                    if(*(&current->next->name+n) < *(&current->name+n)) {
+                        std::swap(*(&current->next->name + n),*(&current->name + n));
+                    swapped = true;
+                    }
+                    current = current->next;
+                }
+                tmp = current;
+            } while(swapped);
+        }
         void display(int n) {
             Node* temp = head;
             while(temp != nullptr) {
@@ -69,6 +90,7 @@ class LinkedList {
                 }
                 temp = temp->next;
             }
+            std::cout << std::endl;
         }
         ~LinkedList() {
             Node* temp;
@@ -82,18 +104,14 @@ class LinkedList {
 };
 int main() {
     LinkedList Head;
-    Head.insert("abb","bob","21.12.2004");
+    Head.insert("baa","david","12.42.2005");
     Head.insert("aaa","bord","12.42.2005");
     Head.insert("bba","alex","12.42.2005");
-    Head.insert("baa","david","12.42.2005");
-    Head.insert("aaa","muxamed","12.42.2005");
-
-
-    Head.display(0);
-    std::cout << std::endl;
     Head.display(1);
-    std::cout << std::endl;
-    Head.remove("aaa");
-    Head.display(0);
-    std::cout << std::endl;
+    Head.sort(1);
+    Head.insert("aaa","muxamed","12.42.2005");
+    Head.insert("abb","bob","21.12.2004");
+    Head.display(1);
+
+
 }
