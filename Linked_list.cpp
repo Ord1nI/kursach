@@ -1,20 +1,21 @@
 #include "Linked_list.h"
 #include <string>
 #include <iostream>
-Node::Node(std::string name, std::string auther, std::string date){
+Node::Node(std::string name, std::string auther, std::string date, unsigned int pages){
     this->name = name;
     this->auther = auther;
     this->date = date;
+    this->pages = pages;
     this->next = nullptr;
 }
 LinkedList::LinkedList(){
     this->head = nullptr;
     this->sort_by = 0;
-    this->size = 1;
+    this->size = 0;
 }
-void LinkedList::insert(std::string name,std::string auther,std::string date) {
+void LinkedList::insert(std::string name,std::string auther,std::string date,unsigned int pages) {
     size += 1;
-    Node* newNode = new Node(name,auther,date);
+    Node* newNode = new Node(name,auther,date,pages);
     if(head == nullptr ||  *(&(head->name)+sort_by) >= *(&name + sort_by)) {
         newNode->next = head;
         head = newNode;
@@ -60,6 +61,7 @@ void LinkedList::sort(int n) {
                 std::swap(current->next->name,current->name);
                 std::swap(current->next->auther,current->auther);
                 std::swap(current->next->date,current->date);
+                std::swap(current->next->pages,current->pages);
             swapped = true;
             }
             current = current->next;
@@ -67,10 +69,10 @@ void LinkedList::sort(int n) {
         tmp = current;
     } while(swapped);
 }
-void LinkedList::display(int n) {
+void LinkedList::display() {
     Node* temp = head;
     while(temp != nullptr) {
-        std::cout << *(&(temp->name)+n) << " - ";
+        std::cout << *(&(temp->name)) << " - ";
         temp = temp->next;
     }
     std::cout << std::endl;
@@ -86,6 +88,21 @@ void LinkedList::display(int n) {
         temp = temp->next;
     }
     std::cout << std::endl;
+    temp = head;
+    while(temp != nullptr) {
+        std::cout << temp->pages << " - ";
+        temp = temp->next;
+    }
+    std::cout << std::endl;
+}
+Node* LinkedList::GetByPos(unsigned int pos) {
+    if (pos > size)
+        return nullptr;
+    Node* current = head;
+    for(unsigned int i = 0; i != pos; ++i) {
+        current = current->next;
+    }
+    return current;
 }
 LinkedList::~LinkedList() {
     Node* temp;

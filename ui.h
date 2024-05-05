@@ -1,13 +1,15 @@
 #pragma once
 #include <wx/wx.h>
-
-class MainFrame : public wxFrame{
+#include <string>
+class MyFrame : public wxFrame {
+    wxListCtrl* m_item_list;
     public:
-        MainFrame(const wxString& title);
-
-
+        MyFrame();
+        void AddItem(const std::string &name, const std::string &auther, const std::string &date);
 };
-class App : public wxApp {
+class MyApp: public wxApp {
+    wxFrame* m_frame;
+
     public:
         bool OnInit();
 };
