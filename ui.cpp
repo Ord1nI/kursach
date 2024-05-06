@@ -9,13 +9,12 @@ MyFrame::MyFrame() : wxFrame(NULL, wxID_ANY,  wxT("Hello wxWidgets"), wxPoint(50
     wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
     VirtualList* Ilist = new VirtualList(mainPane, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-    Ilist->Data->insert("a","e","b",34);
-    Ilist->Data->insert("b","d","b",34);
-    Ilist->Data->insert("c","c","b",34);
-    Ilist->Data->insert("d","b","b",34);
-    Ilist->Data->insert("e","a","b",34);
-    Ilist->Data->sort(1);
 
+    Ilist->Data->insert("a","d","21.23.2003",21);
+    Ilist->Data->insert("b","c","21.23.2003",21);
+    Ilist->Data->insert("c","b","21.23.2003",21);
+    Ilist->Data->insert("d","a","21.23.2003",21);
+    Ilist->Data->insert("d","a","21.23.2003",21);
     Ilist->RefrashAfterUpdate();
 
     sizer->Add(Ilist,1, wxEXPAND | wxALL, 10);
@@ -30,6 +29,9 @@ bool MyApp::OnInit() {
 
 VirtualList::VirtualList(wxWindow *parent, const wxWindowID id, const wxPoint& pos, const wxSize& size)
     :wxListCtrl(parent, id, pos, size, wxLC_REPORT | wxLC_VIRTUAL) {
+
+
+    Data = new LinkedList();
     wxListItem col0;
     col0.SetId(0);
     col0.SetText( _("Названи*е") );
@@ -50,7 +52,14 @@ VirtualList::VirtualList(wxWindow *parent, const wxWindowID id, const wxPoint& p
     col2.SetWidth(100);
     this->InsertColumn(2, col2);
 
-    Data = new LinkedList();
+    this->Bind(wxEVT_LIST_COL_CLICK, [this](wxListEvent &evt) {
+        this->sort_by_col(evt.GetColumn());
+        this->RefrashAfterUpdate();
+    });
+
+}
+void VirtualList::sort_by_col(int n) {
+    this->Data->sort(n);
 }
 void VirtualList::RefrashAfterUpdate() {
     this->SetItemCount(Data->size);
