@@ -1,5 +1,4 @@
 #pragma once
-
 #include <wx/wx.h>
 #include <wx/listctrl.h>
 #include "Linked_list.h"
