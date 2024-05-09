@@ -43,3 +43,6 @@ void VirtualList::RefrashAfterUpdate() {
     this->SetItemCount(Data->size);
     this->Refresh();
 }
+void VirtualList::Add(std::string name,std::string auther,std::string date,unsigned int pages) {
+    Data->insert(name,auther,date,pages);
+}

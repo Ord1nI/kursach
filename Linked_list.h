@@ -5,7 +5,7 @@ struct Node {
         std::string name;
         std::string auther;
         std::string date;
-        unsigned int pages;
+        std::string pages;
         Node* next;
 
         Node(std::string name, std::string auther, std::string date, unsigned int pages);
