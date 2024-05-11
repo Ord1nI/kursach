@@ -4,6 +4,7 @@ VirtualList::VirtualList(wxWindow *parent, const wxWindowID id, const wxPoint& p
 
 
     Data = new LinkedList();
+
     wxListItem col0;
     col0.SetId(0);
     col0.SetText( wxT("Название") );
@@ -31,18 +32,38 @@ VirtualList::VirtualList(wxWindow *parent, const wxWindowID id, const wxPoint& p
     this->InsertColumn(3, col3);
 
     this->Bind(wxEVT_LIST_COL_CLICK, [this](wxListEvent &evt) {
-        this->sort_by_col(evt.GetColumn());
-        this->RefrashAfterUpdate();
+        if(this->Data->size > 1){
+            this->sort_by_col(evt.GetColumn());
+            this->RefrashAfterUpdate();
+        }
     });
 
 }
 void VirtualList::sort_by_col(int n) {
-    this->Data->sort(n);
+    if(Data->GetSort_by() != n) {
+        this->Data->sort(n);
+        Revers = false;
+    }
+        Revers = not(Revers);
 }
 void VirtualList::RefrashAfterUpdate() {
     this->SetItemCount(Data->size);
     this->Refresh();
 }
-void VirtualList::Add(std::string name,std::string auther,std::string date,unsigned int pages) {
+void VirtualList::Add(std::string name,std::string auther,std::string date,std::string pages) {
     Data->insert(name,auther,date,pages);
+}
+long VirtualList::GetFirstSelectedIndex() {
+    return GetNextItem(-1,wxLIST_NEXT_ALL,wxLIST_STATE_SELECTED);
+
+}
+void VirtualList::Remove(long index){
+    if (index < 0)
+        return;
+    if (Revers)
+        index = Data->size-index-1;
+
+    Data->remove(index);
+
+
 }

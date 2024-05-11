@@ -5,11 +5,12 @@
 #include <wx/string.h>
 
 class VirtualList : public wxListCtrl{
+    bool Revers = false;
     public:
     LinkedList* Data;
     VirtualList(wxWindow *parent, const wxWindowID id, const wxPoint& pos, const wxSize& size);
     virtual wxString OnGetItemText(long index, long column) const wxOVERRIDE{
-        Node* item = Data->GetByPos(index);
+        Node* item = Data->GetByPos(index,Revers);
         if(item == nullptr)
             return "";
         switch (column){
@@ -22,5 +23,7 @@ class VirtualList : public wxListCtrl{
     }
     void RefrashAfterUpdate();
     void sort_by_col(int n);
-    void Add(std::string name,std::string auther,std::string date,unsigned int pages);
+    void Add(std::string name,std::string auther,std::string date,std::string pages);
+    void Remove(long index);
+    long GetFirstSelectedIndex();
 };
