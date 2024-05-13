@@ -67,7 +67,9 @@ long VirtualList::GetFirstSelectedIndex() {
 
 }
 void VirtualList::find(wxCommandEvent& event) {
-    if(Search_mode) {
+    if (event.GetString() == "")
+        return;
+    if (Search_mode) {
         std::swap(Data,Search);
         Search->clear();
     }
@@ -79,7 +81,8 @@ void VirtualList::find(wxCommandEvent& event) {
     this->RefrashAfterUpdate();
 }
 void VirtualList::Clear_search(wxCommandEvent& event) {
-    std::swap(Data,Search);
+    if (Search_mode)
+        std::swap(Data,Search);
     Search->clear();
     Search_mode = false;
     RefrashAfterUpdate();

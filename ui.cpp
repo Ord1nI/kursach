@@ -11,6 +11,7 @@ MyFrame::MyFrame() : wxFrame(NULL, wxID_ANY,  wxT("Библиотека"), wxPoi
     wxPanel* mainPane = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
     wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer* search_sizer = new wxBoxSizer(wxHORIZONTAL);
 
     auto toolbar = CreateToolBar();
         toolbar->AddTool(ATool, "NEW", wxArtProvider::GetBitmap("wxART_PLUS"));
@@ -19,22 +20,31 @@ MyFrame::MyFrame() : wxFrame(NULL, wxID_ANY,  wxT("Библиотека"), wxPoi
         toolbar->Realize();
 
     wxSearchCtrl* Search = new wxSearchCtrl(mainPane,wxID_ANY);
+    wxButton* SearchBtn = new wxButton(mainPane,wxID_ANY,"Искать");
 
-    Search->ShowSearchButton(false);
+    Search->ShowSearchButton(true);
+    Search->ShowCancelButton(true);
+
     Search->SetDescriptiveText(wxT("Поиск"));
     IList = new VirtualList(mainPane, wxID_ANY, wxDefaultPosition, wxDefaultSize);
     IList->GetFromFile("books.xml");
-    IList->GenFile("test.xml");
 
     BookSelect = new BookSelectFrame("Добавление книги",IList);
 
     Search->Bind(wxEVT_SEARCH,&VirtualList::find,IList);
     Search->Bind(wxEVT_SEARCH_CANCEL,&VirtualList::Clear_search,IList);
+    Search->Bind(wxEVT_TEXT,[this](wxCommandEvent& event) {
+        if (event.GetString() == "")
+            IList->Clear_search(event);
+    });
+    SearchBtn->Bind(wxEVT_BUTTON,&VirtualList::find,IList);
 
     toolbar->Bind(wxEVT_TOOL, &MyFrame::ShowBookSelectFrame,this,ATool);
     toolbar->Bind(wxEVT_TOOL, &MyFrame::Remove,this,RTool);
     toolbar->Bind(wxEVT_TOOL, &VirtualList::Undo,IList,UTool);
-    sizer->Add(Search,0,wxEXPAND | wxLEFT | wxRIGHT, 10);
+    search_sizer->Add(Search,1,wxEXPAND);
+    search_sizer->Add(SearchBtn,0,wxLEFT,10);
+    sizer->Add(search_sizer,0,wxEXPAND|wxRIGHT|wxLEFT|wxTOP,10);
     sizer->Add(IList,1, wxEXPAND | wxALL, 10);
     mainPane->SetSizerAndFit(sizer);
 }

@@ -54,6 +54,8 @@ BookSelectFrame::BookSelectFrame(const wxString& title,VirtualList* List)
 }
  void BookSelectFrame::Insert_Book(wxCommandEvent &event) {
      TransferDataFromWindow();
+     if(name.IsNull() || auther.IsNull() || date.IsNull() || pages.IsNull())
+         return;
      list->Add(name.utf8_string(),auther.utf8_string(),date.utf8_string(),pages.utf8_string());
      name.Clear();
      auther.Clear();
