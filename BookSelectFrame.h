@@ -4,11 +4,11 @@
 
 class BookSelectFrame: public wxDialog {
         VirtualList* list;
-public:
         wxString name;
         wxString auther;
         wxString date;
         wxString pages;
+public:
     BookSelectFrame(const wxString& title,VirtualList* List);
     void Insert_Book(wxCommandEvent& event);
 };

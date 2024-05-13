@@ -16,15 +16,16 @@ BookSelectFrame::BookSelectFrame(const wxString& title,VirtualList* List)
 
     auto AutherLabel = new wxStaticText(this,wxID_ANY,wxT("Автор:"));
     auto AutherTextCtrl = new wxTextCtrl(this,wxID_ANY,wxEmptyString,wxDefaultPosition,wxSize(FromDIP(300),wxDefaultSize.GetHeight()));
-    NameTextCtrl->SetValidator(wxTextValidator(wxFILTER_NONE, &auther));
+    AutherTextCtrl->SetValidator(wxTextValidator(wxFILTER_NONE, &auther));
 
     auto DateLabel = new wxStaticText(this,wxID_ANY,wxT("Дата издания:"));
     auto DateTextCtrl = new wxTextCtrl(this,wxID_ANY,wxEmptyString,wxDefaultPosition,wxSize(FromDIP(300),wxDefaultSize.GetHeight()));
-    NameTextCtrl->SetValidator(wxTextValidator(wxFILTER_NONE, &date));
+    DateTextCtrl->SetValidator(wxTextValidator(wxFILTER_DIGITS, &date));
 
     auto PageLabel = new wxStaticText(this,wxID_ANY,wxT("Кол-во страниц:"));
     auto PageTextCtrl = new wxTextCtrl(this,wxID_ANY,wxEmptyString,wxDefaultPosition,wxSize(FromDIP(300),wxDefaultSize.GetHeight()));
-    NameTextCtrl->SetValidator(wxTextValidator(wxFILTER_NONE, &pages));
+    PageTextCtrl->SetValidator(wxTextValidator(wxFILTER_DIGITS, &pages));
+    PageTextCtrl->SetDefaultStyle(wxTextAttr(wxNullColour, *wxLIGHT_GREY));
     std::vector<wxWindow*> fromItems = {
         NameLabel,
         NameTextCtrl,
@@ -53,8 +54,11 @@ BookSelectFrame::BookSelectFrame(const wxString& title,VirtualList* List)
 }
  void BookSelectFrame::Insert_Book(wxCommandEvent &event) {
      TransferDataFromWindow();
-     list->Add(name.ToStdString(),auther.ToStdString(),date.ToStdString(),10);
+     list->Add(name.utf8_string(),auther.utf8_string(),date.utf8_string(),pages.utf8_string());
+     name.Clear();
+     auther.Clear();
+     date.Clear();
+     pages.Clear();
      list->RefrashAfterUpdate();
-
-
+     this->Show(false);
 }

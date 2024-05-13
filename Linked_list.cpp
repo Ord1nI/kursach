@@ -1,10 +1,10 @@
 #include "Linked_list.h"
 #include <string>
 #include <iostream>
-Node::Node(std::string name, std::string auther, std::string date, std::string pages){
+Node::Node(std::string name, std::string auther, std::string year, std::string pages){
     this->name = name;
     this->auther = auther;
-    this->date = date;
+    this->year = year;
     this->pages = pages;
     this->next = nullptr;
     this->prev = nullptr;
@@ -27,8 +27,8 @@ int LinkedList::compare(Node* item1,Node* item2,int sort_by) {
             val_item2 = &item2->auther;
             break;
         case 2:
-            val_item1 = &item1->date;
-            val_item2 = &item2->date;
+            val_item1 = &item1->year;
+            val_item2 = &item2->year;
             break;
         case 3:
             val_item1 = &item1->pages;
@@ -53,9 +53,37 @@ Node* LinkedList::Begin() {
 int LinkedList::GetSort_by() {
     return this->sort_by;
 }
-void LinkedList::insert(std::string name,std::string auther,std::string date,std::string pages) {
+void LinkedList::append(std::string name, std::string auther,std::string year,std::string pages) {
+    Node* newNode = new Node(name,auther,year,pages);
+    if(head == nullptr) {
+        head = newNode;
+        end = newNode;
+    }
+    else {
+        end->next = newNode;
+        newNode->prev = end;
+        end = newNode;
+    }
     size += 1;
-    Node* newNode = new Node(name,auther,date,pages);
+}
+void LinkedList::pop() {
+    if(size == 1) {
+        delete end;
+        end = nullptr;
+        head = nullptr;
+    }
+    else {
+        Node* item = end->prev;
+        item->next = nullptr;
+        delete end;
+        end = item;
+    }
+    size-=1;
+}
+void LinkedList::insert(Node *item) {
+
+    size += 1;
+    Node* newNode = new Node(item->name,item->auther,item->year,item->pages);
     if(head == nullptr ||  (compare(head,newNode,sort_by) != -1  ))  {
         if (head!=nullptr)
             head->prev = newNode;
@@ -79,6 +107,57 @@ void LinkedList::insert(std::string name,std::string auther,std::string date,std
 
     }
 }
+void LinkedList::insert(std::string name, std::string auther,std::string year,std::string pages) {
+    size += 1;
+    Node* newNode = new Node(name,auther,year,pages);
+    if(head == nullptr ||  (compare(head,newNode,sort_by) != -1  ))  {
+        if (head!=nullptr)
+            head->prev = newNode;
+        else
+            end = newNode;
+        newNode->next = head;
+        head = newNode;
+    } else {
+        Node* current = head;
+        while(current->next != nullptr && compare(current->next,newNode,sort_by) != 1) {
+            current = current->next;
+        }
+        if (current->next == nullptr) {
+            end = newNode;
+        }
+        else
+            current->next->prev = newNode;
+        newNode->next = current -> next;
+        newNode->prev = current;
+        current->next = newNode;
+
+    }
+}
+void LinkedList::remove(Node *item) {
+    if (item->prev != nullptr){
+        if (item->next !=nullptr){
+            item->prev->next = item->next;
+            item->next->prev = item->prev;
+        }
+        else {
+            end = item->prev;
+            item->prev->next = nullptr;
+        }
+    } else {
+        if (item->next !=nullptr){
+            head = item->next;
+            head->prev = nullptr;
+        } else {
+            end = nullptr;
+            head = nullptr;
+        }
+
+    }
+
+    size -=1;
+    delete item;
+}
+
 void LinkedList::remove(long index) {
     if (index>size-1)
         return;
@@ -126,7 +205,7 @@ void LinkedList::sort(int n) {
             if(compare(current->next,current,n) == -1) {
                 std::swap(current->next->name,current->name);
                 std::swap(current->next->auther,current->auther);
-                std::swap(current->next->date,current->date);
+                std::swap(current->next->year,current->year);
                 std::swap(current->next->pages,current->pages);
             swapped = true;
             }
@@ -192,7 +271,7 @@ void LinkedList::display_back() {
     std::cout << std::endl;
 }
 Node* LinkedList::GetByPos(unsigned int pos, bool reverse) {
-    if (pos > size-1)
+    if (pos >= size )
         return nullptr;
     if(not(reverse)) {
         Node* current = head;
@@ -208,6 +287,19 @@ Node* LinkedList::GetByPos(unsigned int pos, bool reverse) {
         return current;
     }
     return nullptr;
+}
+void LinkedList::clear() {
+    if(size > 0) {
+        Node* temp;
+        while(head != nullptr) {
+            temp = head;
+            head = head->next;
+            delete temp;
+        }
+        end = nullptr;
+        size = 0;
+    }
+
 }
 LinkedList::~LinkedList() {
     Node* temp;

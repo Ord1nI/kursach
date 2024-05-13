@@ -7,6 +7,7 @@
 enum ToolsId {
     ATool = wxID_LAST+1,
     RTool,
+    UTool,
 };
 
 class MyFrame : public wxFrame {

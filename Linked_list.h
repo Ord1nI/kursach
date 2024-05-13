@@ -4,12 +4,12 @@ struct Node {
     public:
         std::string name;
         std::string auther;
-        std::string date;
+        std::string year;
         std::string pages;
         Node* next;
         Node* prev;
 
-        Node(std::string name, std::string auther, std::string date, std::string pages);
+        Node(std::string name, std::string auther, std::string year, std::string pages);
 };
 class LinkedList {
     private:
@@ -21,12 +21,16 @@ class LinkedList {
     public:
     unsigned int size;
         LinkedList();
-        void insert(std::string name,std::string auther,std::string date,std::string pages);
+        void pop();
+        void append(std::string name, std::string auther,std::string year,std::string pages);
+        void insert(std::string name,std::string auther,std::string year,std::string pages);
+        void insert(Node *item);
 
-        void remove(std::string name);
         void remove(long index);
+        void remove(Node *item);
 
         void sort(int n);
+        void clear();
 
         void display();
         void display_back();
