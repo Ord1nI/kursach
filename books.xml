@@ -1,0 +1,128 @@
+<lib>
+    <book>
+        <name>Мастер и Маргарита</name>
+        <auther>Михаил Булгаков</auther>
+        <year>1967</year>
+        <pages>384</pages>
+    </book>
+    <book>
+        <name>Повесть временных лет</name>
+        <auther>Сергей Соловьев</auther>
+        <year>1895</year>
+        <pages>742</pages>
+    </book>
+    <book>
+        <name>Идиот</name>
+        <auther>Фёдор Достоевский</auther>
+        <year>1869</year>
+        <pages>656</pages>
+    </book>
+    <book>
+        <name>Записки из подполья</name>
+        <auther>Фёдор Достоевский</auther>
+        <year>1864</year>
+        <pages>256</pages>
+    </book>
+    <book>
+        <name>Оноре де Бальзак</name>
+        <auther>Генри Тройл</auther>
+        <year>1963</year>
+        <pages>432</pages>
+    </book>
+    <book>
+        <name>Анна Каренина</name>
+        <auther>Лев Толстой</auther>
+        <year>1877</year>
+        <pages>864</pages>
+    </book>
+    <book>
+        <name>Война и мир</name>
+        <auther>Лев Толстой</auther>
+        <year>1869</year>
+        <pages>1225</pages>
+    </book>
+    <book>
+        <name>Преступление и наказание</name>
+        <auther>Фёдор Достоевский</auther>
+        <year>1866</year>
+        <pages>671</pages>
+    </book>
+    <book>
+        <name>Мертвые души</name>
+        <auther>Николай Гоголь</auther>
+        <year>1842</year>
+        <pages>464</pages>
+    </book>
+    <book>
+        <name>Евгений Онегин</name>
+        <auther>Александр Пушкин</auther>
+        <year>1833</year>
+        <pages>223</pages>
+    </book>
+    <book>
+        <name>Тихий Дон</name>
+        <auther>Михаил Шолохов</auther>
+        <year>1940</year>
+        <pages>1178</pages>
+    </book>
+    <book>
+        <name>Убить пересмешника</name>
+        <auther>Харпер Ли</auther>
+        <year>1960</year>
+        <pages>376</pages>
+    </book>
+    <book>
+        <name>Гордость и предубеждение</name>
+        <auther>Джейн Остин</auther>
+        <year>1813</year>
+        <pages>432</pages>
+    </book>
+    <book>
+        <name>Великий Гэтсби</name>
+        <auther>Фрэнсис Скотт Фицджеральд</auther>
+        <year>1925</year>
+        <pages>218</pages>
+    </book>
+    <book>
+        <name>Триумфальная арка</name>
+        <auther>Эрих Мария Ремарк</auther>
+        <year>1945</year>
+        <pages>579</pages>
+    </book>
+    <book>
+        <name>1984</name>
+        <auther>Джордж Оруэлл</auther>
+        <year>1949</year>
+        <pages>328</pages>
+    </book>
+    <book>
+        <name>Бойцовский клуб</name>
+        <auther>Чак Паланик</auther>
+        <year>1996</year>
+        <pages>224</pages>
+    </book>
+    <book>
+        <name>Алхимик</name>
+        <auther>Пауло Коэльо</auther>
+        <year>1988</year>
+        <pages>208</pages>
+    </book>
+    <book>
+        <name>Одиночество в сети</name>
+        <auther>Паоло Легренци</auther>
+        <year>2006</year>
+        <pages>416</pages>
+    </book>
+    <book>
+        <name>Смерть на брудершафт</name>
+        <auther>Александр Маринин</auther>
+        <year>2011</year>
+        <pages>320</pages>
+    </book>
+    <book>
+        <name>Дракон и Феникс</name>
+        <auther>Джоан Роулинг</auther>
+        <year>2020</year>
+        <pages>352</pages>
+    </book>
+</lib>

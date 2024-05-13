@@ -24,6 +24,7 @@ class MyApp : public wxApp {
     public:
         MyFrame* m_frame;
         bool OnInit();
+        int OnExit();
 };
 class MyToolBar : public wxToolBar{
     public:

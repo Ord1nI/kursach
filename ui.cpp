@@ -20,7 +20,7 @@ MyFrame::MyFrame() : wxFrame(NULL, wxID_ANY,  wxT("Библиотека"), wxPoi
         toolbar->Realize();
 
     wxSearchCtrl* Search = new wxSearchCtrl(mainPane,wxID_ANY);
-    wxButton* SearchBtn = new wxButton(mainPane,wxID_ANY,"Искать");
+    wxButton* SearchBtn = new wxButton(mainPane,wxID_ANY,wxT("Искать"));
 
     Search->ShowSearchButton(true);
     Search->ShowCancelButton(true);
@@ -61,6 +61,12 @@ bool MyApp::OnInit() {
     m_frame = new MyFrame();
     m_frame->Show();
     return true;
+}
+
+int MyApp::OnExit() {
+    m_frame->IList->GenFile("Books.xml");
+    m_frame->Close();
+    return 0;
 }
 MyToolBar::MyToolBar(wxWindow *parent, wxWindowID id, const wxPoint &pos, const wxSize &size)
     :wxToolBar(parent,id,pos,size){

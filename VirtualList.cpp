@@ -127,7 +127,13 @@ void VirtualList::Undo(wxCommandEvent &event) {
     if (UndoList->size == 0)
         return;
     auto item = UndoList->GetByPos(0,true);
-    Add(item->name,item->auther,item->year,item->pages);
+    if(Search_mode){
+        Data->insert(item->name,item->auther,item->year,item->pages);
+        Search->insert(item->name,item->auther,item->year,item->pages);
+    }
+    else {
+        Data->insert(item->name,item->auther,item->year,item->pages);
+    }
     UndoList->pop();
     RefrashAfterUpdate();
 }
