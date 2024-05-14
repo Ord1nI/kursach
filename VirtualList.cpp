@@ -157,22 +157,20 @@ void VirtualList::GetFromFile(const char *string) {
     RefrashAfterUpdate();
 }
 void VirtualList::GenFile(const char *string) {
-    if (Data->size >0){
-        tinyxml2::XMLDocument doc;
-        doc.Parse(
-        "<books>"
-        "</books>");
-        auto current = Data->Begin();
-        auto book = doc.FirstChildElement();
-        auto el = book->ToElement();
-        while (current != nullptr){
-            el = book->InsertNewChildElement("book");
-            el->InsertNewChildElement("name")->SetText(current->name.c_str());
-            el->InsertNewChildElement("auther")->SetText(current->auther.c_str());
-            el->InsertNewChildElement("year")->SetText(current->year.c_str());
-            el->InsertNewChildElement("pages")->SetText(current->pages.c_str());
-            current = current->next;
-        }
-        doc.SaveFile(string);
+    tinyxml2::XMLDocument doc;
+    doc.Parse(
+    "<books>"
+    "</books>");
+    auto current = Data->Begin();
+    auto book = doc.FirstChildElement();
+    auto el = book->ToElement();
+    while (current != nullptr){
+        el = book->InsertNewChildElement("book");
+        el->InsertNewChildElement("name")->SetText(current->name.c_str());
+        el->InsertNewChildElement("auther")->SetText(current->auther.c_str());
+        el->InsertNewChildElement("year")->SetText(current->year.c_str());
+        el->InsertNewChildElement("pages")->SetText(current->pages.c_str());
+        current = current->next;
     }
+    doc.SaveFile(string);
 }
