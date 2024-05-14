@@ -25,7 +25,7 @@ MyFrame::MyFrame() : wxFrame(nullptr, wxID_ANY,  wxT("Библиотека"), wx
     Search->Bind(wxEVT_SEARCH,&VirtualList::find,IList);
     Search->Bind(wxEVT_SEARCH_CANCEL,&VirtualList::Clear_search,IList);
     Search->Bind(wxEVT_TEXT,[this](wxCommandEvent& event) {
-        if (event.GetString() == "")
+        if (event.GetString() == "" && IList->Search_mode == true)
             IList->Clear_search(event);
     });
     SearchBtn->Bind(wxEVT_BUTTON,&VirtualList::find,IList);

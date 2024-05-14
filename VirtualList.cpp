@@ -46,9 +46,9 @@ VirtualList::VirtualList(wxWindow *parent, const wxWindowID id, const wxPoint& p
 void VirtualList::sort_by_col(int n) {
     if(Data->GetSort_by() != n) {
         this->Data->sort(n);
-        Revers = false;
+            Revers = false;
     }
-        Revers = not(Revers);
+            Revers = not(Revers);
 }
 void VirtualList::RefrashAfterUpdate() {
     this->SetItemCount(Data->size);
@@ -73,8 +73,7 @@ void VirtualList::find(wxCommandEvent& event) {
         std::swap(Data,Search);
         Search->clear();
     }
-    find(event.GetString().utf8_string());
-    if(Search->size == 0)
+    if(not(find(event.GetString().utf8_string())))
         return;
     std::swap(Data,Search);
     Search_mode = true;
@@ -88,17 +87,21 @@ void VirtualList::Clear_search(wxCommandEvent& event) {
     RefrashAfterUpdate();
 }
 
-void VirtualList::find(std::string search_by) {
-    std::cout <<search_by;
+bool VirtualList::find(std::string search_by) {
     if(Data->size == 0)
-        return;
+        return false;
+    if (Search_mode)
+        std::swap(Data,Search);
     Node *current = Data->Begin();
+    bool find = false;
     while(current != nullptr){
         if(current->name == search_by || current->auther == search_by || current->year == search_by || current->pages == search_by){
             Search->insert(current);
+            find = true;
         }
         current = current->next;
     }
+    return find;
 }
 void VirtualList::Remove(long index){
     if (index < 0)
