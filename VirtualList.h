@@ -37,4 +37,5 @@ class VirtualList : public wxListCtrl{
     void find(wxCommandEvent &event);
     void find(std::string search_by);
     void Clear_search(wxCommandEvent& event);
+    // ~VirtualList();
 };

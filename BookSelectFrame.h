@@ -9,6 +9,6 @@ class BookSelectFrame: public wxDialog {
         wxString date;
         wxString pages;
 public:
-    BookSelectFrame(const wxString& title,VirtualList* List);
+    BookSelectFrame(wxWindow *parent,const wxString& title,VirtualList* List);
     void Insert_Book(wxCommandEvent& event);
 };

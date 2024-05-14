@@ -1,9 +1,8 @@
 #include "BookSelectFrame.h"
 #include <iostream>
 #include <wx/wx.h>
-BookSelectFrame::BookSelectFrame(const wxString& title,VirtualList* List)
-    :wxDialog(NULL, wxID_ANY,title,wxDefaultPosition,wxSize(250,230)){
-    auto Frame = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+BookSelectFrame::BookSelectFrame(wxWindow *parent,const wxString& title,VirtualList* List)
+    :wxDialog(parent, wxID_ANY,title,wxDefaultPosition,wxSize(250,230)){
     this-> list = List;
     auto SizerMain = new wxBoxSizer(wxVERTICAL);
     auto SizerText = new wxBoxSizer(wxVERTICAL);
@@ -25,7 +24,6 @@ BookSelectFrame::BookSelectFrame(const wxString& title,VirtualList* List)
     auto PageLabel = new wxStaticText(this,wxID_ANY,wxT("Кол-во страниц:"));
     auto PageTextCtrl = new wxTextCtrl(this,wxID_ANY,wxEmptyString,wxDefaultPosition,wxSize(FromDIP(300),wxDefaultSize.GetHeight()));
     PageTextCtrl->SetValidator(wxTextValidator(wxFILTER_DIGITS, &pages));
-    PageTextCtrl->SetDefaultStyle(wxTextAttr(wxNullColour, *wxLIGHT_GREY));
     std::vector<wxWindow*> fromItems = {
         NameLabel,
         NameTextCtrl,
@@ -54,7 +52,7 @@ BookSelectFrame::BookSelectFrame(const wxString& title,VirtualList* List)
 }
  void BookSelectFrame::Insert_Book(wxCommandEvent &event) {
      TransferDataFromWindow();
-     if(name.IsNull() || auther.IsNull() || date.IsNull() || pages.IsNull())
+     if(name == "" || auther == "" || date == "" || pages == "")
          return;
      list->Add(name.utf8_string(),auther.utf8_string(),date.utf8_string(),pages.utf8_string());
      name.Clear();

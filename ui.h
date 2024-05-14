@@ -1,9 +1,11 @@
-#pragma once
+#ifndef _UI_H
+#define _UI_H
+#include<wx/srchctrl.h>
 #include <wx/wx.h>
-#include <wx/toolbar.h>
 #include <string>
 #include "VirtualList.h"
 #include "BookSelectFrame.h"
+#include <wx/artprov.h>
 enum ToolsId {
     ATool = wxID_LAST+1,
     RTool,
@@ -22,11 +24,9 @@ class MyFrame : public wxFrame {
 class MyApp : public wxApp {
 
     public:
-        MyFrame* m_frame;
+        MyFrame * m_frame;
         bool OnInit();
-        int OnExit();
+        // int OnExit();
+        void on_close(wxCloseEvent& event);
 };
-class MyToolBar : public wxToolBar{
-    public:
-        MyToolBar(wxWindow *parent, wxWindowID id, const wxPoint &pos, const wxSize &size);
-};
+#endif
