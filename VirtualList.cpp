@@ -72,9 +72,12 @@ void VirtualList::find(wxCommandEvent& event) {
     if (Search_mode) {
         std::swap(Data,Search);
         Search->clear();
+        Search_mode = false;
     }
-    if(not(find(event.GetString().utf8_string())))
+    if(not(find(event.GetString().utf8_string()))) {
+        this->RefrashAfterUpdate();
         return;
+    }
     std::swap(Data,Search);
     Search_mode = true;
     this->RefrashAfterUpdate();
@@ -90,8 +93,6 @@ void VirtualList::Clear_search(wxCommandEvent& event) {
 bool VirtualList::find(std::string search_by) {
     if(Data->size == 0)
         return false;
-    if (Search_mode)
-        std::swap(Data,Search);
     Node *current = Data->Begin();
     bool find = false;
     while(current != nullptr){
@@ -157,6 +158,8 @@ void VirtualList::GetFromFile(const char *string) {
     RefrashAfterUpdate();
 }
 void VirtualList::GenFile(const char *string) {
+    if (Search_mode)
+        std::swap(Data,Search);
     tinyxml2::XMLDocument doc;
     doc.Parse(
     "<books>"
