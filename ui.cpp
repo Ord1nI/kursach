@@ -5,6 +5,7 @@ MyFrame::MyFrame() : wxFrame(nullptr, wxID_ANY,  wxT("Библиотека"), wx
     wxBoxSizer* search_sizer = new wxBoxSizer(wxHORIZONTAL);
 
     auto toolbar = CreateToolBar();
+        toolbar->AddTool(ITool, "Info",wxArtProvider::GetBitmap("wxART_TIP"));
         toolbar->AddTool(ATool, "NEW", wxArtProvider::GetBitmap("wxART_PLUS"));
         toolbar->AddTool(RTool, "Rm", wxArtProvider::GetBitmap("wxART_MINUS"));
         toolbar->AddTool(UTool, "Undo",wxArtProvider::GetBitmap("wxART_UNDO"));
@@ -21,7 +22,6 @@ MyFrame::MyFrame() : wxFrame(nullptr, wxID_ANY,  wxT("Библиотека"), wx
     IList->GetFromFile("books.xml");
 
     BookSelect = new BookSelectFrame(this,"Добавление книги",IList);
-
     Search->Bind(wxEVT_SEARCH,&VirtualList::find,IList);
     Search->Bind(wxEVT_SEARCH_CANCEL,&VirtualList::Clear_search,IList);
     Search->Bind(wxEVT_TEXT,[this](wxCommandEvent& event) {
@@ -30,9 +30,12 @@ MyFrame::MyFrame() : wxFrame(nullptr, wxID_ANY,  wxT("Библиотека"), wx
     });
     SearchBtn->Bind(wxEVT_BUTTON,&VirtualList::find,IList);
 
-    toolbar->Bind(wxEVT_TOOL, &MyFrame::ShowBookSelectFrame,this,ATool);
-    toolbar->Bind(wxEVT_TOOL, &MyFrame::Remove,this,RTool);
-    toolbar->Bind(wxEVT_TOOL, &VirtualList::Undo,IList,UTool);
+    toolbar->Bind(wxEVT_TOOL, &MyFrame::ShowInfo, this, ITool);
+    toolbar->Bind(wxEVT_TOOL, &MyFrame::ShowBookSelectFrame, this, ATool);
+    toolbar->Bind(wxEVT_TOOL, &MyFrame::Remove, this, RTool);
+    toolbar->Bind(wxEVT_TOOL, &VirtualList::Undo, IList, UTool);
+
+
     search_sizer->Add(Search,1,wxEXPAND);
     search_sizer->Add(SearchBtn,0,wxLEFT,10);
     sizer->Add(search_sizer,0,wxEXPAND|wxRIGHT|wxLEFT|wxTOP,10);
@@ -47,11 +50,24 @@ void MyFrame::Remove(wxCommandEvent &event) {
 void MyFrame::ShowBookSelectFrame(wxCommandEvent &event) {
     BookSelect->Show(true);
 }
+void MyFrame::ShowInfo(wxCommandEvent &event) {
+    wxMessageBox("Программа библиотека.\n\n"
+                 "Нажмите + чтобы добавить книгу.\n"
+                 "Нажмите - чтобы удалить книгу.\n"
+                 "Поиск: для поиска введите искомую книги, автора или год выпуска в поле сверху", "Инфорация", wxICON_QUESTION);
+}
+void MyFrame::ShowInfo() {
+    wxMessageBox("Программа библиотека.\n\n"
+                 "Нажмите + чтобы добавить книгу.\n"
+                 "Нажмите - чтобы удалить книгу.\n"
+                 "Поиск: для поиска введите искомую книги, автора или год выпуска в поле сверху", "Информация", wxICON_QUESTION);
+}
 
 bool MyApp::OnInit() {
     m_frame = new MyFrame();
     m_frame->Bind(wxEVT_CLOSE_WINDOW,&MyApp::on_close,this);
     m_frame->Show();
+    m_frame->ShowInfo();
     return true;
 }
 void MyApp::on_close(wxCloseEvent& event){

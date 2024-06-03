@@ -10,6 +10,7 @@ enum ToolsId {
     ATool = wxID_LAST+1,
     RTool,
     UTool,
+    ITool,
 };
 
 class MyFrame : public wxFrame {
@@ -20,6 +21,8 @@ class MyFrame : public wxFrame {
         void AddItem(const std::string &name, const std::string &auther, const std::string &date);
         void ShowBookSelectFrame(wxCommandEvent &event);
         void Remove(wxCommandEvent &event);
+        void ShowInfo();
+        void ShowInfo(wxCommandEvent &event);
 };
 class MyApp : public wxApp {
 
